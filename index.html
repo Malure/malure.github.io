@@ -1,342 +1,475 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronDown, Github, ExternalLink, Play, Users, Zap, Brain, Home, User, Briefcase, Mail, Menu, X, Chrome, Youtube, Tv } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malure - Digital Innovation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-  const scrollToSection = (sectionId) => {
-    setActiveSection(sectionId);
-    setIsMenuOpen(false);
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-  };
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
-  const projects = [
-    {
-      id: 'briffy',
-      title: 'Briffy',
-      subtitle: 'YouTube Video Summarizer',
-      description: 'A powerful browser extension that summarizes YouTube videos in seconds using advanced AI technology. Save time and get key insights instantly.',
-      tech: ['Chrome Extension', 'AI/ML', 'JavaScript', 'YouTube API'],
-      status: 'In Development',
-      icon: <Chrome className="w-8 h-8" />,
-      gradient: 'from-red-500 to-orange-500',
-      features: [
-        'AI-powered summarization',
-        'One-click installation',
-        'Real-time processing',
-        'Multi-language support'
-      ]
-    },
-    {
-      id: 'borealis',
-      title: 'Borealis House',
-      subtitle: 'Content Creation Triumvirate',
-      description: 'A network of three specialized channels creating engaging content across different niches, building communities and delivering value.',
-      tech: ['Content Strategy', 'Video Production', 'Community Management'],
-      status: 'Planning',
-      icon: <Tv className="w-8 h-8" />,
-      gradient: 'from-purple-500 to-pink-500',
-      features: [
-        'Multi-channel network',
-        'Specialized content niches',
-        'Community engagement',
-        'Brand partnerships'
-      ]
-    }
-  ];
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
 
-  const skills = [
-    { name: 'Frontend Development', level: 90, icon: <Zap className="w-5 h-5" /> },
-    { name: 'Browser Extensions', level: 85, icon: <Chrome className="w-5 h-5" /> },
-    { name: 'AI Integration', level: 80, icon: <Brain className="w-5 h-5" /> },
-    { name: 'Content Strategy', level: 75, icon: <Youtube className="w-5 h-5" /> },
-    { name: 'Project Management', level: 88, icon: <Users className="w-5 h-5" /> }
-  ];
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-black/20 backdrop-blur-md border-b border-white/10' : 'bg-transparent'
-      }`}>
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Malure
-            </div>
-            
-            <div className="hidden md:flex space-x-8">
-              {[
-                { id: 'home', label: 'Home', icon: Home },
-                { id: 'about', label: 'About', icon: User },
-                { id: 'projects', label: 'Projects', icon: Briefcase },
-                { id: 'contact', label: 'Contact', icon: Mail }
-              ].map(({ id, label, icon: Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => scrollToSection(id)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 ${
-                    activeSection === id 
-                      ? 'bg-white/10 text-blue-400' 
-                      : 'hover:bg-white/5 hover:text-blue-300'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{label}</span>
-                </button>
-              ))}
-            </div>
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background: #4a3c4a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-            <button 
-              className="md:hidden p-2"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
+        .chalice {
+            width: 24px;
+            height: 30px;
+            position: relative;
+        }
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-black/90 backdrop-blur-md border-b border-white/10">
-            <div className="px-6 py-4 space-y-4">
-              {[
-                { id: 'home', label: 'Home', icon: Home },
-                { id: 'about', label: 'About', icon: User },
-                { id: 'projects', label: 'Projects', icon: Briefcase },
-                { id: 'contact', label: 'Contact', icon: Mail }
-              ].map(({ id, label, icon: Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => scrollToSection(id)}
-                  className="flex items-center space-x-3 w-full px-4 py-2 rounded-lg hover:bg-white/10 transition-colors"
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
+        .chalice-cup {
+            width: 20px;
+            height: 16px;
+            background: #4a3c4a;
+            border: 2px solid #fff;
+            border-radius: 20px 20px 8px 8px;
+            position: relative;
+            margin: 0 auto;
+        }
 
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-pulse"></div>
-          {[...Array(50)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${2 + Math.random() * 3}s`
-              }}
-            ></div>
-          ))}
-        </div>
-        
-        <div className="text-center z-10 max-w-4xl mx-auto px-6">
-          <div className="mb-8 relative">
-            <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-4xl font-bold mb-6 animate-bounce">
-              M
-            </div>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
-            Welcome to Malure
-          </h1>
-          
-          <p className="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Building innovative solutions that make technology more accessible and content more digestible
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => scrollToSection('projects')}
-              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg font-semibold hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-blue-500/25"
-            >
-              View Projects
-            </button>
-            <button
-              onClick={() => scrollToSection('about')}
-              className="px-8 py-4 border border-white/20 rounded-lg font-semibold hover:bg-white/10 transition-all duration-300"
-            >
-              Learn More
-            </button>
-          </div>
-        </div>
-        
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-8 h-8 text-white/60" />
-        </div>
-      </section>
+        .chalice-stem {
+            width: 3px;
+            height: 8px;
+            background: #fff;
+            margin: 0 auto;
+        }
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            About Malure
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-blue-400">Our Mission</h3>
-              <p className="text-gray-300 leading-relaxed mb-6 text-lg">
-                At Malure, we believe in the power of innovation to solve real-world problems. Our focus is on creating tools and content that enhance how people consume and interact with digital media.
-              </p>
-              <p className="text-gray-300 leading-relaxed text-lg">
-                From AI-powered browser extensions to strategic content creation, we're building the future of digital experiences.
-              </p>
-            </div>
-            
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold mb-6 text-purple-400">Skills & Expertise</h3>
-              {skills.map((skill) => (
-                <div key={skill.name} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-white/10 rounded-lg">
-                        {skill.icon}
-                      </div>
-                      <span className="font-medium">{skill.name}</span>
+        .chalice-base {
+            width: 12px;
+            height: 4px;
+            background: #fff;
+            border-radius: 2px;
+            margin: 0 auto;
+        }
+
+        .cosmic-interior {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 8px;
+            background: radial-gradient(circle at 30% 30%, #667eea, #1a1a2e);
+            border-radius: 18px 18px 6px 6px;
+            overflow: hidden;
+        }
+
+        .cosmic-interior::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 30%;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 
+                8px 2px 0 -1px white,
+                4px 6px 0 -1px white,
+                -2px 4px 0 -1px rgba(255,255,255,0.8),
+                6px -1px 0 -1px rgba(255,255,255,0.6);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.3);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(238, 90, 36, 0.4);
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .project-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .project-card p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .project-features li {
+            padding: 0.5rem 0;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .project-features li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .project-status {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .coming-soon {
+            background: linear-gradient(45deg, #ffa726, #ff7043);
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .project-card {
+                padding: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Floating particles animation */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { width: 10px; height: 10px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 15px; height: 15px; left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { width: 8px; height: 8px; left: 70%; animation-delay: 2s; }
+        .particle:nth-child(4) { width: 12px; height: 12px; left: 80%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); opacity: 0.7; }
+            50% { transform: translateY(-20px); opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <div class="chalice">
+                            <div class="chalice-cup">
+                                <div class="cosmic-interior"></div>
+                            </div>
+                            <div class="chalice-stem"></div>
+                            <div class="chalice-base"></div>
+                        </div>
                     </div>
-                    <span className="text-sm text-gray-400">{skill.level}%</span>
-                  </div>
-                  <div className="w-full bg-white/10 rounded-full h-2">
-                    <div 
-                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000 ease-out"
-                      style={{ width: `${skill.level}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                    Malure
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-      </section>
+    </header>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-6 bg-black/20">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Our Projects
-          </h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <div key={project.id} className="group relative">
-                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300 hover:transform hover:scale-105 h-full">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className={`p-3 rounded-xl bg-gradient-to-r ${project.gradient} text-white`}>
-                      {project.icon}
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <h1>Malure</h1>
+                <p>Crafting digital experiences that draw you into something deeper. Where innovation meets the allure of the unknown.</p>
+                <a href="#projects" class="cta-button">Explore Our Universe</a>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="container">
+                <h2 class="section-title">Our Cosmic Projects</h2>
+                
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>Briffy</h3>
+                        <p>A powerful YouTube summarizer browser extension designed to supercharge your productivity. Transform hours of video content into digestible insights in seconds.</p>
+                        
+                        <ul class="project-features">
+                            <li>Instant AI-powered video summaries</li>
+                            <li>Key timestamp extraction</li>
+                            <li>Multiple summary formats</li>
+                            <li>Seamless browser integration</li>
+                            <li>Time-saving productivity boost</li>
+                        </ul>
+                        
+                        <div class="project-status">Browser Extension</div>
                     </div>
-                    <span className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium">
-                      {project.status}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-blue-400 font-medium mb-4">{project.subtitle}</p>
-                  <p className="text-gray-300 mb-6 leading-relaxed">{project.description}</p>
-                  
-                  <div className="mb-6">
-                    <h4 className="font-semibold mb-3 text-purple-400">Key Features:</h4>
-                    <ul className="grid grid-cols-2 gap-2">
-                      {project.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center text-sm text-gray-300">
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></div>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tech.map((tech) => (
-                      <span key={tech} className="px-3 py-1 bg-white/10 rounded-full text-xs font-medium">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex space-x-4">
-                    <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg font-medium hover:scale-105 transition-transform duration-200">
-                      <ExternalLink className="w-4 h-4" />
-                      <span>Learn More</span>
-                    </button>
-                    <button className="flex items-center space-x-2 px-4 py-2 border border-white/20 rounded-lg font-medium hover:bg-white/10 transition-colors">
-                      <Github className="w-4 h-4" />
-                      <span>Code</span>
-                    </button>
-                  </div>
+
+                    <div class="project-card">
+                        <h3>Borealis House</h3>
+                        <p>A triumvirate of YouTube channels representing our content creation empire. Three distinct voices, one unified vision of digital storytelling.</p>
+                        
+                        <ul class="project-features">
+                            <li>Multi-channel content strategy</li>
+                            <li>Diverse audience engagement</li>
+                            <li>Cross-platform storytelling</li>
+                            <li>Community building focus</li>
+                            <li>Creative collaboration hub</li>
+                        </ul>
+                        
+                        <div class="project-status coming-soon">Coming Soon</div>
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Let's Connect
-          </h2>
-          
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            Interested in collaborating or learning more about our projects? We'd love to hear from you.
-          </p>
-          
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <Mail className="w-8 h-8 text-blue-400 mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Email</h3>
-              <p className="text-gray-300 text-sm">hello@malure.com</p>
             </div>
-            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <Github className="w-8 h-8 text-purple-400 mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">GitHub</h3>
-              <p className="text-gray-300 text-sm">@malure</p>
-            </div>
-            <div className="p-6 bg-white/5 rounded-xl border border-white/10">
-              <Users className="w-8 h-8 text-pink-400 mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Social</h3>
-              <p className="text-gray-300 text-sm">@maluretech</p>
-            </div>
-          </div>
-          
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg font-semibold hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-blue-500/25">
-            Get In Touch
-          </button>
-        </div>
-      </section>
+        </section>
+    </main>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 border-t border-white/10 bg-black/20">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Malure
-          </div>
-          <p className="text-gray-400 text-sm">
-            © 2025 Malure. Building the future, one innovation at a time.
-          </p>
+    <footer id="contact">
+        <div class="container">
+            <p>&copy; 2025 Malure. Embracing the allure of digital innovation.</p>
         </div>
-      </footer>
-    </div>
-  );
-};
+    </footer>
 
-export default Portfolio;
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.15)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.1)';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
